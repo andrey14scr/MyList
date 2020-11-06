@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MyList" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="stringAdd">Добавить</sys:String>
+    <sys:String x:Key="stringBookmark">Закладка</sys:String>
+
+    <sys:String x:Key="stringMenu">Меню</sys:String>
+    <sys:String x:Key="stringShowArchive">Архив</sys:String>
+    <sys:String x:Key="stringToArchive">Архивировать</sys:String>
+    <sys:String x:Key="stringCompleted">Выполненные</sys:String>
+    <sys:String x:Key="stringHideArchive">Выйти из архива</sys:String>
+    <sys:String x:Key="stringExit">Выйти</sys:String>
+    <sys:String x:Key="stringGoTo">Перейти</sys:String>
+    <sys:String x:Key="stringSupport">Поддержка</sys:String>
+
+    <sys:String x:Key="stringEdit">Редактировать</sys:String>
+    <sys:String x:Key="stringDelete">Удалить</sys:String>
+    <sys:String x:Key="stringRevoke">Отменить</sys:String>
+
+    <sys:String x:Key="stringDialogWindow">Диалоговое окно</sys:String>
+    <sys:String x:Key="stringDoNotShwoAgain">Больше не показывать</sys:String>
+    <sys:String x:Key="stringYes">Да</sys:String>
+    <sys:String x:Key="stringNo">Нет</sys:String>
+
+    <sys:String x:Key="stringNote">Заметка</sys:String>
+    <sys:String x:Key="stringToday">Сегодня</sys:String>
+    <sys:String x:Key="stringNow">Сейчас</sys:String>
+    <sys:String x:Key="stringClear">Очистить</sys:String>
+    <sys:String x:Key="stringDate">Дата</sys:String>
+    <sys:String x:Key="stringTime">Время</sys:String>
+    <sys:String x:Key="stringRemind">Напомнить</sys:String>
+    <sys:String x:Key="stringWriteTextNote">Введите текст заметки</sys:String>
+    <sys:String x:Key="stringRepeatEveryDay">Каждый</sys:String>
+    <sys:String x:Key="stringRepeatEveryMonth">Каждое</sys:String>
+    <sys:String x:Key="stringChooseNecessaryDays">Выберите нужные дни</sys:String>
+    <sys:String x:Key="stringThDate">-ое число выбранных месяцев</sys:String>
+    <sys:String x:Key="stringTh">-й</sys:String>
+
+    <sys:String x:Key="stringReminder">Напоминания</sys:String>
+    <sys:String x:Key="stringClose">Закрыть</sys:String>
+    <sys:String x:Key="stringCloseAll">Закрыть всё</sys:String>
+    <sys:String x:Key="stringComplete">Выполнить</sys:String>
+    <sys:String x:Key="stringPutOff">Отложить</sys:String>
+    <sys:String x:Key="stringStop">Стоп</sys:String>
+    <sys:String x:Key="stringOn">на</sys:String>
+
+    <sys:String x:Key="stringDoRemind">Напоминать</sys:String>
+    <sys:String x:Key="stringBefore">Заранее за</sys:String>
+    <sys:String x:Key="stringInervalBetweenReminds">С интервалом</sys:String>
+    <sys:String x:Key="stringStartPoint">Начало отсчета</sys:String>
+    <sys:String x:Key="stringCurrent">Текущее</sys:String>
+    
+    <sys:String x:Key="stringDone">Готово</sys:String>
+    <sys:String x:Key="stringCancel">Отмена</sys:String>
+
+    <sys:String x:Key="stringRepeat">Повторять</sys:String>
+    <sys:String x:Key="stringDoNotRepeat">не повторять</sys:String>
+    <sys:String x:Key="stringEveryDay">каждый день</sys:String>
+    <sys:String x:Key="stringEveryWeekDay">каждую неделю</sys:String>
+    <sys:String x:Key="stringEveryMonthDay">каждый месяц</sys:String>
+
+    <sys:String x:Key="stringMinutes">минут</sys:String>
+    <sys:String x:Key="stringHours">часов</sys:String>
+    <sys:String x:Key="stringOfDays">дней</sys:String>
+    <sys:String x:Key="stringDay">день</sys:String>
+
+    <sys:String x:Key="stringDoNotRemind">не напоминать</sys:String>
+    <sys:String x:Key="stringOnce">один раз</sys:String>
+    <sys:String x:Key="stringPeriodically">периодически</sys:String>
+    <sys:String x:Key="stringCombined">комбинированное</sys:String>
+
+    <sys:String x:Key="stringH">Ч</sys:String>
+    <sys:String x:Key="stringM">М</sys:String>
+    <sys:String x:Key="stringS">С</sys:String>
+
+    <sys:String x:Key="stringh">ч</sys:String>
+    <sys:String x:Key="stringmin">мин</sys:String>
+    <sys:String x:Key="stringd">дн</sys:String>
+
+    <sys:String x:Key="stringMonday">Понедельник</sys:String>
+    <sys:String x:Key="stringTuesday">Вторник</sys:String>
+    <sys:String x:Key="stringWednesday">Среда</sys:String>
+    <sys:String x:Key="stringThursday">Четверг</sys:String>
+    <sys:String x:Key="stringFriday">Пятница</sys:String>
+    <sys:String x:Key="stringSaturday">Суббота</sys:String>
+    <sys:String x:Key="stringSunday">Воскресенье</sys:String>
+    <sys:String x:Key="stringMon">пн</sys:String>
+    <sys:String x:Key="stringTue">вт</sys:String>
+    <sys:String x:Key="stringWed">ср</sys:String>
+    <sys:String x:Key="stringThu">чт</sys:String>
+    <sys:String x:Key="stringFri">пт</sys:String>
+    <sys:String x:Key="stringSat">сб</sys:String>
+    <sys:String x:Key="stringSun">вс</sys:String>
+
+    <sys:String x:Key="stringJanuary">Январь</sys:String>
+    <sys:String x:Key="stringFebruary">Февраль</sys:String>
+    <sys:String x:Key="stringMarch">Март</sys:String>
+    <sys:String x:Key="stringApril">Апрель</sys:String>
+    <sys:String x:Key="stringMay">Май</sys:String>
+    <sys:String x:Key="stringJune">Июнь</sys:String>
+    <sys:String x:Key="stringJuly">Июль</sys:String>
+    <sys:String x:Key="stringAugust">Август</sys:String>
+    <sys:String x:Key="stringSeptember">Сентябрь</sys:String>
+    <sys:String x:Key="stringOctober">Октябрь</sys:String>
+    <sys:String x:Key="stringNovember">Ноябрь</sys:String>
+    <sys:String x:Key="stringDecember">Декабрь</sys:String>
+
+    <sys:String x:Key="stringSettings">Настройки</sys:String>
+    <sys:String x:Key="stringLanguage">Язык</sys:String>
+    <sys:String x:Key="stringEnglish">Английский</sys:String>
+    <sys:String x:Key="stringRussian">Русский</sys:String>
+    <sys:String x:Key="stringRemindSound">Звук напоминания</sys:String>
+    <sys:String x:Key="stringOnn">Вкл</sys:String>
+    <sys:String x:Key="stringOff">Выкл</sys:String>
+    <sys:String x:Key="stringClearDatabase">Очистить базу данных</sys:String>
+    <sys:String x:Key="stringWavFormatOnly">* только .wav формат</sys:String>
+    <sys:String x:Key="stringWithoutSound">Без звука</sys:String>
+    <sys:String x:Key="stringFocusText">Фокус на текст</sys:String>
+
+    <sys:String x:Key="stringWriteHere">Пишите здесь.</sys:String>
+
+</ResourceDictionary>

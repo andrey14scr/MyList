@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MyList" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="stringAdd">Add</sys:String>
+    <sys:String x:Key="stringBookmark">Bookmark</sys:String>
+
+    <sys:String x:Key="stringMenu">Menu</sys:String>
+    <sys:String x:Key="stringToArchive">To archive</sys:String>
+    <sys:String x:Key="stringCompleted">Completed</sys:String>
+    <sys:String x:Key="stringAllCompletedToArchive">Archive complited</sys:String>
+    <sys:String x:Key="stringHiseArchive">Exit archive</sys:String>
+    <sys:String x:Key="stringExit">Exit</sys:String>
+    <sys:String x:Key="stringGoTo">Go to</sys:String>
+    <sys:String x:Key="stringSupport">Support</sys:String>
+
+    <sys:String x:Key="stringEdit">Edit</sys:String>
+    <sys:String x:Key="stringDelete">Delete</sys:String>
+    <sys:String x:Key="stringRevoke">Revoke</sys:String>
+
+    <sys:String x:Key="stringDialogWindow">Dialog window</sys:String>
+    <sys:String x:Key="stringDoNotShwoAgain">Do not show again</sys:String>
+    <sys:String x:Key="stringYes">Yes</sys:String>
+    <sys:String x:Key="stringNo">No</sys:String>
+
+    <sys:String x:Key="stringNote">Note</sys:String>
+    <sys:String x:Key="stringToday">Today</sys:String>
+    <sys:String x:Key="stringNow">Now</sys:String>
+    <sys:String x:Key="stringClear">Clear</sys:String>
+    <sys:String x:Key="stringDate">Date</sys:String>
+    <sys:String x:Key="stringTime">Time</sys:String>
+    <sys:String x:Key="stringRemind">Remind</sys:String>
+    <sys:String x:Key="stringWriteTextNote">Write the text of note</sys:String>
+    <sys:String x:Key="stringRepeatEveryDay">Every</sys:String>
+    <sys:String x:Key="stringRepeatEveryMonth">Every</sys:String>
+    <sys:String x:Key="stringChooseNecessaryDays">Choose necessary days</sys:String>
+    <sys:String x:Key="stringThDate">-th day of selected monthes</sys:String>
+    <sys:String x:Key="stringTh">-th</sys:String>
+
+    <sys:String x:Key="stringReminder">Reminder</sys:String>
+    <sys:String x:Key="stringClose">Close</sys:String>
+    <sys:String x:Key="stringCloseAll">Close all</sys:String>
+    <sys:String x:Key="stringComplete">Complete</sys:String>
+    <sys:String x:Key="stringPutOff">Put off</sys:String>
+    <sys:String x:Key="stringStop">Stop</sys:String>
+    <sys:String x:Key="stringOn">on</sys:String>
+
+    <sys:String x:Key="stringDoRemind">Remind</sys:String>
+    <sys:String x:Key="stringBefore">Earlier on</sys:String>
+    <sys:String x:Key="stringInervalBetweenReminds">With interval</sys:String>
+    <sys:String x:Key="stringStartPoint">Start point</sys:String>
+    <sys:String x:Key="stringCurrent">Current</sys:String>
+
+    <sys:String x:Key="stringDone">Done</sys:String>
+    <sys:String x:Key="stringCancel">Cancel</sys:String>
+
+    <sys:String x:Key="stringRepeat">Repeat</sys:String>
+    <sys:String x:Key="stringDoNotRepeat">do not repeat</sys:String>
+    <sys:String x:Key="stringEveryDay">every day</sys:String>
+    <sys:String x:Key="stringEveryWeekDay">every week day</sys:String>
+    <sys:String x:Key="stringEveryMonthDay">every month day</sys:String>
+
+    <sys:String x:Key="stringMinutes">minutes</sys:String>
+    <sys:String x:Key="stringHours">hours</sys:String>
+    <sys:String x:Key="stringOfDays">days</sys:String>
+    <sys:String x:Key="stringDay">day</sys:String>
+
+    <sys:String x:Key="stringDoNotRemind">do not remind</sys:String>
+    <sys:String x:Key="stringOnce">once</sys:String>
+    <sys:String x:Key="stringPeriodically">periodically</sys:String>
+    <sys:String x:Key="stringCombined">combined</sys:String>
+
+    <sys:String x:Key="stringH">H</sys:String>
+    <sys:String x:Key="stringM">M</sys:String>
+    <sys:String x:Key="stringS">S</sys:String>
+
+    <sys:String x:Key="stringh">h</sys:String>
+    <sys:String x:Key="stringmin">min</sys:String>
+    <sys:String x:Key="stringd">d</sys:String>
+
+    <sys:String x:Key="stringMonday">Monday</sys:String>
+    <sys:String x:Key="stringTuesday">Tuesday</sys:String>
+    <sys:String x:Key="stringWednesday">Wednesday</sys:String>
+    <sys:String x:Key="stringThursday">Thursday</sys:String>
+    <sys:String x:Key="stringFriday">Friday</sys:String>
+    <sys:String x:Key="stringSaturday">Saturday</sys:String>
+    <sys:String x:Key="stringSunday">Sunday</sys:String>
+    <sys:String x:Key="stringMon">Mon</sys:String>
+    <sys:String x:Key="stringTue">Tue</sys:String>
+    <sys:String x:Key="stringWed">Wed</sys:String>
+    <sys:String x:Key="stringThu">Thu</sys:String>
+    <sys:String x:Key="stringFri">Fri</sys:String>
+    <sys:String x:Key="stringSat">Sat</sys:String>
+    <sys:String x:Key="stringSun">Sun</sys:String>
+
+    <sys:String x:Key="stringJanuary">January</sys:String>
+    <sys:String x:Key="stringFebruary">February</sys:String>
+    <sys:String x:Key="stringMarch">March</sys:String>
+    <sys:String x:Key="stringApril">April</sys:String>
+    <sys:String x:Key="stringMay">May</sys:String>
+    <sys:String x:Key="stringJune">June</sys:String>
+    <sys:String x:Key="stringJuly">July</sys:String>
+    <sys:String x:Key="stringAugust">August</sys:String>
+    <sys:String x:Key="stringSeptember">September</sys:String>
+    <sys:String x:Key="stringOctober">October</sys:String>
+    <sys:String x:Key="stringNovember">November</sys:String>
+    <sys:String x:Key="stringDecember">December</sys:String>
+
+    <sys:String x:Key="stringSettings">Settings</sys:String>
+    <sys:String x:Key="stringLanguage">Language</sys:String>
+    <sys:String x:Key="stringEnglish">English</sys:String>
+    <sys:String x:Key="stringRussian">Russian</sys:String>
+    <sys:String x:Key="stringRemindSound">Remind sound</sys:String>
+    <sys:String x:Key="stringOnn">On</sys:String>
+    <sys:String x:Key="stringOff">Off</sys:String>
+    <sys:String x:Key="stringClearDatabase">Clear database</sys:String>
+    <sys:String x:Key="stringWavFormatOnly">* .wav format only</sys:String>
+    <sys:String x:Key="stringWithoutSound">Without sound</sys:String>
+    <sys:String x:Key="stringFocusText">Focus text</sys:String>
+
+    <sys:String x:Key="stringWriteHere">Write here.</sys:String>
+
+</ResourceDictionary>
