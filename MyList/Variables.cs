@@ -11,18 +11,19 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Windows.Threading;
 using System.Media;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Dropbox.Api;
+//using Dropbox.Api;
 using System.Text;
-using Dropbox.Api.Files;
+using System.Windows.Media.Animation;
+//using Dropbox.Api.Files;
 
 namespace MyList
 {
     public partial class MainWindow : Window
     {
-        static string mytoken = "sl.AkvCuPOTz9wacOL_zP_3l60MS_qsqFWJ4Hu4V0IF0IRU_1S87VSYAaWcebDsHnNwIZV_zxFlApTRRdlkaLAoEdvFtZOHFVFK_LwhPv0k64BLx5Hz7voFTP9KFLWuGTS541yZvjN11QI";
-        static string JsonContent;
+        //static string mytoken = "sl.AkvCuPOTz9wacOL_zP_3l60MS_qsqFWJ4Hu4V0IF0IRU_1S87VSYAaWcebDsHnNwIZV_zxFlApTRRdlkaLAoEdvFtZOHFVFK_LwhPv0k64BLx5Hz7voFTP9KFLWuGTS541yZvjN11QI";
+        //static string JsonContent;
 
         private double CurrentHeight = 0;
         const double constMessagePanelHeight = 32;
@@ -97,7 +98,7 @@ namespace MyList
         ///<summary>Player that plays sound while reminding</summary>
         SoundPlayer Music;
 
-
+        /*
         private void AddToJson(int todo, Note note)
         {
             string path = GlobalClass.FindPath() + "\\" + Properties.Resources.appResFolderName + "\\" + Properties.Resources.appJsonFile + ".json";
@@ -172,7 +173,7 @@ namespace MyList
                 }
             }
         }
-
+        */
 
         private void OpenFromTray()
         {
@@ -255,6 +256,9 @@ namespace MyList
 
             Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
             Canvas.SetTop(MainCalendar, 28);
+
+            spMenu.Height = this.ActualHeight - 112;
+            lblVoid.Height = spMenu.Height - 182;
         }
       
         /// <summary>Hide menu after right mouse click</summary>
@@ -1165,6 +1169,24 @@ namespace MyList
             {
                 Music = new SoundPlayer(path);
             }
+        }
+
+        private void ChangeMenu()
+        {
+            DoubleAnimation myAnimation = new DoubleAnimation();
+            myAnimation.From = spMenu.ActualWidth;
+            isopen = !isopen;
+            if (!isopen)
+            {
+                myAnimation.To = 0;
+                myAnimation.Duration = TimeSpan.FromMilliseconds(200);
+            }
+            else
+            {
+                myAnimation.To = 100;
+                myAnimation.Duration = TimeSpan.FromMilliseconds(400);
+            }
+            spMenu.BeginAnimation(StackPanel.WidthProperty, myAnimation);
         }
     }
 }

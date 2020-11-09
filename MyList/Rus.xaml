@@ -14,6 +14,9 @@
     <sys:String x:Key="stringExit">Выйти</sys:String>
     <sys:String x:Key="stringGoTo">Перейти</sys:String>
     <sys:String x:Key="stringSupport">Поддержка</sys:String>
+    
+    <sys:String x:Key="stringSend">Отправить</sys:String>
+    <sys:String x:Key="stringClearAttachments">Убрать вложения</sys:String>
 
     <sys:String x:Key="stringEdit">Редактировать</sys:String>
     <sys:String x:Key="stringDelete">Удалить</sys:String>

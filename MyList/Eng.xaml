@@ -7,6 +7,7 @@
     <sys:String x:Key="stringBookmark">Bookmark</sys:String>
 
     <sys:String x:Key="stringMenu">Menu</sys:String>
+    <sys:String x:Key="stringShowArchive">Archive</sys:String>
     <sys:String x:Key="stringToArchive">To archive</sys:String>
     <sys:String x:Key="stringCompleted">Completed</sys:String>
     <sys:String x:Key="stringAllCompletedToArchive">Archive complited</sys:String>
@@ -14,6 +15,9 @@
     <sys:String x:Key="stringExit">Exit</sys:String>
     <sys:String x:Key="stringGoTo">Go to</sys:String>
     <sys:String x:Key="stringSupport">Support</sys:String>
+    
+    <sys:String x:Key="stringSend">Send</sys:String>
+    <sys:String x:Key="stringClearAttachments">Clear attachments</sys:String>
 
     <sys:String x:Key="stringEdit">Edit</sys:String>
     <sys:String x:Key="stringDelete">Delete</sys:String>

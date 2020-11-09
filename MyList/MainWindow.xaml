@@ -21,6 +21,7 @@
         <Grid Margin="0,0,-0.4,0" Background="#FF78AEFD" Height="51" VerticalAlignment="Bottom">
             <Button x:Name="btnAdd" Content="{DynamicResource stringAdd}" Margin="95,7" FontSize="16" Click="btnAdd_Click" IsTabStop="False" Padding="1,0,1,1"/>
             <Button x:Name="btnExit" Content="{DynamicResource stringClose}" Margin="0,7,10.4,7" RenderTransformOrigin="0.48,0.076" Click="btnExit_Click" HorizontalAlignment="Right" Width="75" FontSize="16" Padding="1,0,1,1"/>
+            <Button x:Name="btnOpen" Content="Button" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="75" Height="37" Click="Button_Click"/>
         </Grid>
 
 
@@ -50,6 +51,17 @@
                 </MenuItem>
             </Menu>
         </Canvas>
+
+        <StackPanel x:Name="spMenu" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="0" Canvas.Top="22" Background="#FFCAF1FD" Margin="0,22,0,0">
+            <Label x:Name="lblGoto" Content="{DynamicResource stringGoTo}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblGoto_MouseUp"/>
+            <Label x:Name="lblToday" Content="{DynamicResource stringToday}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblToday_MouseUp"/>
+            <Label x:Name="lblArchive" Content="{DynamicResource stringShowArchive}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblArchive_MouseUp"/>
+            <Label x:Name="lblToArchive" Content="{DynamicResource stringToArchive}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblToArchive_MouseUp"/>
+            <Label x:Name="lblSettings" Content="{DynamicResource stringSettings}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblSettings_MouseUp"/>
+            <Label x:Name="lblSupport" Content="{DynamicResource stringSupport}" Height="26" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" MouseUp="lblSupport_MouseUp"/>
+            <Label x:Name="lblVoid" Content="" Height="164"/>
+            <Label x:Name="lblExit" Content="{DynamicResource stringExit}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblExit_MouseUp"/>
+        </StackPanel>
 
         <Menu x:Name="MenuBox" HorizontalAlignment="Left" Height="72" Margin="-148,54,0,0" VerticalAlignment="Top" Width="114">
             <MenuItem x:Name="miEdit" Header="{DynamicResource stringEdit}" Height="24" Width="114" Click="Edit_Click">

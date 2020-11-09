@@ -6,7 +6,8 @@ using System.Windows.Input;
 using System.IO;
 using System.Data.SqlClient;
 using Microsoft.Win32;
-using System.Net.Mail;
+
+using System.Windows.Media.Animation;
 
 namespace MyList
 {
@@ -338,21 +339,10 @@ namespace MyList
         }
         private void miSupport_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                MailMessage mail = new MailMessage("andrey14scr@gmail.com", "andrey14scr@gmail.com");
-                mail.Subject = "MyList";
-                mail.Body = "This is body";
-                SmtpClient client = new SmtpClient("smtp.gmail.com");
-                client.Port = 587;
-                client.Credentials = new System.Net.NetworkCredential("andrey14scr@gmail.com", "59645206gg14");
-                client.EnableSsl = true;
-                client.Send(mail);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            SupportForm sf = new SupportForm(this);
+            GlobalClass.SetLang(sf);
+            sf.ShowDialog();
+            sf.Close();
         }
 
 
@@ -360,7 +350,7 @@ namespace MyList
         {
             HideList();
             CurrentPanel = null;
-            if (!lblData.IsMouseOver)
+            if (!lblData.IsMouseOver && !lblGoto.IsMouseOver)
                 MainCalendar.Visibility = Visibility.Hidden;
         }
         private void Window_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -639,6 +629,133 @@ namespace MyList
         {
             HideList();
             CurrentPanel = null;
+        }
+
+        private void lblMenuItem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Background = System.Windows.Media.Brushes.LightBlue;
+        }
+
+        private void lblMenuItem_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as Label).Background = System.Windows.Media.Brushes.Transparent;
+        }
+
+        private bool isopen = false;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeMenu();
+        }
+
+
+
+        private void lblGoto_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            MainCalendar.SelectedDate = CurrentDateDay;
+            MainCalendar.Visibility = Visibility.Visible;
+            Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
+            Canvas.SetTop(MainCalendar, 28);
+        }
+
+        private void lblToday_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            CurrentDateDay = DateTime.Now.Date;
+            SelectDataForDay(CurrentDateDay);
+        }
+
+        private void lblArchive_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            if (!IsArchive)
+            {
+                IsArchive = true;
+                miArchive.Header = (string)this.FindResource("stringHideArchive");
+            }
+            else
+            {
+                IsArchive = false;
+                miArchive.Header = (string)this.FindResource("stringShowArchive");
+            }
+            SelectDataForDay(CurrentDateDay);
+        }
+
+        private void lblToArchive_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            string sqlExpression = "UPDATE TableOfNotes SET IsArchiveNote=1 WHERE IsDoneNote = 1";
+            using (SqlConnection connection = new SqlConnection(MainConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sqlExpression, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            SelectDataForDay(CurrentDateDay);
+        }
+
+        private void lblSettings_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            Settings stn = new Settings() { Owner = this };
+            stn.chbFocus.IsChecked = IsFocusText;
+            stn.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if ((bool)stn.ShowDialog())
+            {
+                if (MainGrid.Children.Count > 0 && (MainGrid.Children[0] is TextBox) && (MainGrid.Children[0] as TextBox).Text == (string)this.FindResource("stringWriteHere"))
+                    (MainGrid.Children[0] as TextBox).Text = "";
+                GlobalClass.SetLang(this);
+                GlobalClass.SetLang(WinReminder);
+                Music = null;
+                if (stn.MusicName != "" && GlobalClass.IsSound)
+                    SetMusic(stn.MusicName);
+
+                ShortWeekDays = new List<string>() { (string)this.FindResource("stringSun"), (string)this.FindResource("stringMon"), (string)this.FindResource("stringTue"), (string)this.FindResource("stringWed"), (string)this.FindResource("stringThu"), (string)this.FindResource("stringFri"), (string)this.FindResource("stringSat") };
+                if (!IsArchive)
+                    miArchive.Header = (string)this.FindResource("stringShowArchive");
+                else
+                    miArchive.Header = (string)this.FindResource("stringHideArchive");
+                if (!IsBookMark)
+                    SelectDataForDay(CurrentDateDay);
+                else
+                {
+                    lblData.Content = (string)this.FindResource("stringBookmark");
+                    if ((MainGrid.Children[0] as TextBox).Text == "")
+                        (MainGrid.Children[0] as TextBox).Text = (string)this.FindResource("stringWriteHere");
+                }
+
+                IsFocusText = (bool)stn.chbFocus.IsChecked;
+                using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(Properties.Resources.appRegPath))
+                {
+                    RegistryKey nKey = FindRegistry(Key);
+                    nKey.SetValue(Properties.Resources.regIsFocusText, IsFocusText);
+                    nKey.Close();
+                }
+            }
+        }
+
+        private void lblSupport_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenu();
+            SupportForm sf = new SupportForm(this);
+            GlobalClass.SetLang(sf);
+            sf.ShowDialog();
+            sf.Close();
+        }
+
+        private void lblExit_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsClose = true;
+            this.Close();
         }
     }
 }
