@@ -90,7 +90,7 @@ namespace MyList
         public Note InnerNote { get; set; }
         public void SetUsualColor(Note n)
         {
-            if (n.Date.AddMinutes(1).TimeOfDay < DateTime.Now.TimeOfDay)
+            if (n.Date.AddMinutes(1).TimeOfDay < DateTime.Now.TimeOfDay && GlobalClass.CurrentDateDay.Date == DateTime.Now.Date || GlobalClass.CurrentDateDay.Date < DateTime.Now.Date)
                 this.Background = MainWindow.UsualPastColor;
             else
                 this.Background = MainWindow.UsualColor;

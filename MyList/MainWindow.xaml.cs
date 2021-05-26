@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Microsoft.Win32;
 
 using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace MyList
 {
@@ -84,8 +85,8 @@ namespace MyList
 
                 GlobalClass.SetLang(this);
                 ShortWeekDays = new List<string>() { (string)this.FindResource("stringSun"), (string)this.FindResource("stringMon"), (string)this.FindResource("stringTue"), (string)this.FindResource("stringWed"), (string)this.FindResource("stringThu"), (string)this.FindResource("stringFri"), (string)this.FindResource("stringSat") };
-                CurrentDateDay = DateTime.Now.Date;
-                SelectDataForDay(CurrentDateDay);
+                GlobalClass.CurrentDateDay = DateTime.Now.Date;
+                SelectDataForDay(GlobalClass.CurrentDateDay);
                 this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 this.myNotifyIcon.Icon = MyList.Properties.Resources.note;         //  new System.Drawing.Icon(@"../../Resources/note.ico");
                 MainCalendar.Visibility = Visibility.Hidden;
@@ -142,7 +143,7 @@ namespace MyList
             Writer wr = new Writer(this);
             if (IsFocusText)
                 wr.tbText.Focus();
-            wr.dpDate.SelectedDate = CurrentDateDay;
+            wr.dpDate.SelectedDate = GlobalClass.CurrentDateDay;
             wr.cbHour.SelectedIndex = DateTime.Now.Hour;
             wr.cbMinute.SelectedIndex = DateTime.Now.Minute;
             wr.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -154,7 +155,7 @@ namespace MyList
                 //AddToJson(1, NewNote);
                 AddToDB(NewNote);
 
-                SelectDataForDay(CurrentDateDay);
+                SelectDataForDay(GlobalClass.CurrentDateDay);
 
                 if (IsFirstMain && DebugBoolean)
                 {
@@ -181,16 +182,16 @@ namespace MyList
             MainCalendar.Visibility = Visibility.Hidden;
             HideList();
             CurrentPanel = null;
-            CurrentDateDay = CurrentDateDay.AddDays(1);
-            SelectDataForDay(CurrentDateDay);
+            GlobalClass.CurrentDateDay = GlobalClass.CurrentDateDay.AddDays(1);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
         private void btnLeft_Click(object sender, RoutedEventArgs e)
         {
             MainCalendar.Visibility = Visibility.Hidden;
             HideList();
             CurrentPanel = null;
-            CurrentDateDay = CurrentDateDay.AddDays(-1);
-            SelectDataForDay(CurrentDateDay);
+            GlobalClass.CurrentDateDay = GlobalClass.CurrentDateDay.AddDays(-1);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
 
 
@@ -241,79 +242,41 @@ namespace MyList
         {
             HideList();
             CurrentPanel = null;
+            ChangeMenuState();
+            MainCalendar.Visibility = Visibility.Hidden;
         }
-        private void miExit_Click(object sender, RoutedEventArgs e)
+        private void lblGoto_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            IsClose = true;
-            this.Close();
-        }
-        private void miSelectDate_Click(object sender, RoutedEventArgs e)
-        {
-            MainCalendar.SelectedDate = CurrentDateDay;
+            ChangeMenuState();
+            MainCalendar.SelectedDate = GlobalClass.CurrentDateDay;
             MainCalendar.Visibility = Visibility.Visible;
             Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
             Canvas.SetTop(MainCalendar, 28);
         }
-        private void miMenu_SubmenuOpened(object sender, RoutedEventArgs e)
+        private void lblToday_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainCalendar.Visibility = Visibility.Hidden;
-            HideList();
-            CurrentPanel = null;
+            ChangeMenuState();
+            GlobalClass.CurrentDateDay = DateTime.Now.Date;
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
-        private void miSettings_Click(object sender, RoutedEventArgs e)
+        private void lblArchive_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Settings stn = new Settings() { Owner = this };
-            stn.chbFocus.IsChecked = IsFocusText;
-            stn.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            if ((bool)stn.ShowDialog())
-            {
-                if (MainGrid.Children.Count > 0 && (MainGrid.Children[0] is TextBox) && (MainGrid.Children[0] as TextBox).Text == (string)this.FindResource("stringWriteHere"))
-                    (MainGrid.Children[0] as TextBox).Text = "";
-                GlobalClass.SetLang(this);
-                GlobalClass.SetLang(WinReminder);
-                Music = null;
-                if (stn.MusicName != "" && GlobalClass.IsSound)
-                    SetMusic(stn.MusicName);
-
-                ShortWeekDays = new List<string>() { (string)this.FindResource("stringSun"), (string)this.FindResource("stringMon"), (string)this.FindResource("stringTue"), (string)this.FindResource("stringWed"), (string)this.FindResource("stringThu"), (string)this.FindResource("stringFri"), (string)this.FindResource("stringSat") };
-                if (!IsArchive)
-                    miArchive.Header = (string)this.FindResource("stringShowArchive");
-                else
-                    miArchive.Header = (string)this.FindResource("stringHideArchive");
-                if (!IsBookMark)
-                    SelectDataForDay(CurrentDateDay);
-                else
-                {
-                    lblData.Content = (string)this.FindResource("stringBookmark");
-                    if ((MainGrid.Children[0] as TextBox).Text == "")
-                        (MainGrid.Children[0] as TextBox).Text = (string)this.FindResource("stringWriteHere");
-                }
-
-                IsFocusText = (bool)stn.chbFocus.IsChecked;
-                using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(Properties.Resources.appRegPath))
-                {
-                    RegistryKey nKey = FindRegistry(Key);
-                    nKey.SetValue(Properties.Resources.regIsFocusText, IsFocusText);
-                    nKey.Close();
-                }
-            }
-        }
-        private void miArchive_Click(object sender, RoutedEventArgs e)
-        {
+            ChangeMenuState();
             if (!IsArchive)
             {
                 IsArchive = true;
-                miArchive.Header = (string)this.FindResource("stringHideArchive");
+                lblArchive.Content = (string)this.FindResource("stringHideArchive");
             }
             else
             {
                 IsArchive = false;
-                miArchive.Header = (string)this.FindResource("stringShowArchive");
+                lblArchive.Content = (string)this.FindResource("stringShowArchive");
             }
-            SelectDataForDay(CurrentDateDay);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
-        private void miAllCompletedInArchive_Click(object sender, RoutedEventArgs e)
+        private void lblToArchive_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            ChangeMenuState();
             string sqlExpression = "UPDATE TableOfNotes SET IsArchiveNote=1 WHERE IsDoneNote = 1";
             using (SqlConnection connection = new SqlConnection(MainConnectionString))
             {
@@ -330,19 +293,74 @@ namespace MyList
                     MessageBox.Show(ex.Message);
                 }
             }
-            SelectDataForDay(CurrentDateDay);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
-        private void miToday_Click(object sender, RoutedEventArgs e)
+        private void lblSettings_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            CurrentDateDay = DateTime.Now.Date;
-            SelectDataForDay(CurrentDateDay);
+            ChangeMenuState();
+            Settings stn = new Settings() { Owner = this };
+            stn.chbFocus.IsChecked = IsFocusText;
+            stn.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if ((bool)stn.ShowDialog())
+            {
+                if (MainGrid.Children.Count > 0 && (MainGrid.Children[0] is TextBox) && (MainGrid.Children[0] as TextBox).Text == (string)this.FindResource("stringWriteHere"))
+                    (MainGrid.Children[0] as TextBox).Text = "";
+                GlobalClass.SetLang(this);
+                GlobalClass.SetLang(WinReminder);
+                Music = null;
+                if (stn.MusicName != "" && GlobalClass.IsSound)
+                    SetMusic(stn.MusicName);
+
+                ShortWeekDays = new List<string>() { (string)this.FindResource("stringSun"), (string)this.FindResource("stringMon"), (string)this.FindResource("stringTue"), (string)this.FindResource("stringWed"), (string)this.FindResource("stringThu"), (string)this.FindResource("stringFri"), (string)this.FindResource("stringSat") };
+                if (!IsArchive)
+                    lblArchive.Content = (string)this.FindResource("stringShowArchive");
+                else
+                    lblArchive.Content = (string)this.FindResource("stringHideArchive");
+                if (!IsBookMark)
+                    SelectDataForDay(GlobalClass.CurrentDateDay);
+                else
+                {
+                    lblData.Content = (string)this.FindResource("stringBookmark");
+                    if ((MainGrid.Children[0] as TextBox).Text == "")
+                        (MainGrid.Children[0] as TextBox).Text = (string)this.FindResource("stringWriteHere");
+                }
+
+                IsFocusText = (bool)stn.chbFocus.IsChecked;
+                using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(Properties.Resources.appRegPath))
+                {
+                    RegistryKey nKey = FindRegistry(Key);
+                    nKey.SetValue(Properties.Resources.regIsFocusText, IsFocusText);
+                    nKey.Close();
+                }
+            }
         }
-        private void miSupport_Click(object sender, RoutedEventArgs e)
+        private void lblSupport_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            ChangeMenuState();
             SupportForm sf = new SupportForm(this);
             GlobalClass.SetLang(sf);
             sf.ShowDialog();
             sf.Close();
+        }
+        private void lblExit_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsClose = true;
+            this.Close();
+        }
+
+        private void lblMenuItem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender != lblExit)
+                (sender as Label).Background = System.Windows.Media.Brushes.LightBlue;
+            else
+                (sender as Label).Background = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+        }
+        private void lblMenuItem_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender != lblExit)
+                (sender as Label).Background = System.Windows.Media.Brushes.Transparent;
+            else
+                (sender as Label).Background = new SolidColorBrush(Color.FromRgb(255, 130, 130));
         }
 
 
@@ -395,13 +413,13 @@ namespace MyList
             {
                 if (e.Key == Key.Left)
                 {
-                    CurrentDateDay = CurrentDateDay.AddDays(-1);
-                    SelectDataForDay(CurrentDateDay);
+                    GlobalClass.CurrentDateDay = GlobalClass.CurrentDateDay.AddDays(-1);
+                    SelectDataForDay(GlobalClass.CurrentDateDay);
                 }
                 if (e.Key == Key.Right)
                 {
-                    CurrentDateDay = CurrentDateDay.AddDays(1);
-                    SelectDataForDay(CurrentDateDay);
+                    GlobalClass.CurrentDateDay = GlobalClass.CurrentDateDay.AddDays(1);
+                    SelectDataForDay(GlobalClass.CurrentDateDay);
                 }
             }
             else
@@ -456,8 +474,8 @@ namespace MyList
         private void MainCalendaSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             //MessageBox.Show((sender as Calendar).SelectedDate.ToString());
-            CurrentDateDay = (DateTime)(sender as Calendar).SelectedDate;
-            SelectDataForDay(CurrentDateDay);
+            GlobalClass.CurrentDateDay = (DateTime)(sender as Calendar).SelectedDate;
+            SelectDataForDay(GlobalClass.CurrentDateDay);
             MainCalendar.Visibility = Visibility.Hidden;
         }
 
@@ -488,7 +506,7 @@ namespace MyList
                         {
                             (item as MessagePanel).InnerNote.IsArchive = true;
                             UpdateDB((item as MessagePanel).InnerNote.Id, (item as MessagePanel).InnerNote);
-                            SelectDataForDay(CurrentDateDay);
+                            SelectDataForDay(GlobalClass.CurrentDateDay);
                             CurrentPanel = (item as MessagePanel);
                             break;
                         }
@@ -612,7 +630,7 @@ namespace MyList
             {
                 HideList();
                 CurrentPanel = null;
-                MainCalendar.SelectedDate = CurrentDateDay;
+                MainCalendar.SelectedDate = GlobalClass.CurrentDateDay;
                 MainCalendar.Visibility = Visibility.Visible;
                 Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
                 Canvas.SetTop(MainCalendar, 28);
@@ -629,133 +647,6 @@ namespace MyList
         {
             HideList();
             CurrentPanel = null;
-        }
-
-        private void lblMenuItem_MouseEnter(object sender, MouseEventArgs e)
-        {
-            (sender as Label).Background = System.Windows.Media.Brushes.LightBlue;
-        }
-
-        private void lblMenuItem_MouseLeave(object sender, MouseEventArgs e)
-        {
-            (sender as Label).Background = System.Windows.Media.Brushes.Transparent;
-        }
-
-        private bool isopen = false;
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeMenu();
-        }
-
-
-
-        private void lblGoto_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            MainCalendar.SelectedDate = CurrentDateDay;
-            MainCalendar.Visibility = Visibility.Visible;
-            Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
-            Canvas.SetTop(MainCalendar, 28);
-        }
-
-        private void lblToday_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            CurrentDateDay = DateTime.Now.Date;
-            SelectDataForDay(CurrentDateDay);
-        }
-
-        private void lblArchive_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            if (!IsArchive)
-            {
-                IsArchive = true;
-                miArchive.Header = (string)this.FindResource("stringHideArchive");
-            }
-            else
-            {
-                IsArchive = false;
-                miArchive.Header = (string)this.FindResource("stringShowArchive");
-            }
-            SelectDataForDay(CurrentDateDay);
-        }
-
-        private void lblToArchive_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            string sqlExpression = "UPDATE TableOfNotes SET IsArchiveNote=1 WHERE IsDoneNote = 1";
-            using (SqlConnection connection = new SqlConnection(MainConnectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(sqlExpression, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            SelectDataForDay(CurrentDateDay);
-        }
-
-        private void lblSettings_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            Settings stn = new Settings() { Owner = this };
-            stn.chbFocus.IsChecked = IsFocusText;
-            stn.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            if ((bool)stn.ShowDialog())
-            {
-                if (MainGrid.Children.Count > 0 && (MainGrid.Children[0] is TextBox) && (MainGrid.Children[0] as TextBox).Text == (string)this.FindResource("stringWriteHere"))
-                    (MainGrid.Children[0] as TextBox).Text = "";
-                GlobalClass.SetLang(this);
-                GlobalClass.SetLang(WinReminder);
-                Music = null;
-                if (stn.MusicName != "" && GlobalClass.IsSound)
-                    SetMusic(stn.MusicName);
-
-                ShortWeekDays = new List<string>() { (string)this.FindResource("stringSun"), (string)this.FindResource("stringMon"), (string)this.FindResource("stringTue"), (string)this.FindResource("stringWed"), (string)this.FindResource("stringThu"), (string)this.FindResource("stringFri"), (string)this.FindResource("stringSat") };
-                if (!IsArchive)
-                    miArchive.Header = (string)this.FindResource("stringShowArchive");
-                else
-                    miArchive.Header = (string)this.FindResource("stringHideArchive");
-                if (!IsBookMark)
-                    SelectDataForDay(CurrentDateDay);
-                else
-                {
-                    lblData.Content = (string)this.FindResource("stringBookmark");
-                    if ((MainGrid.Children[0] as TextBox).Text == "")
-                        (MainGrid.Children[0] as TextBox).Text = (string)this.FindResource("stringWriteHere");
-                }
-
-                IsFocusText = (bool)stn.chbFocus.IsChecked;
-                using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(Properties.Resources.appRegPath))
-                {
-                    RegistryKey nKey = FindRegistry(Key);
-                    nKey.SetValue(Properties.Resources.regIsFocusText, IsFocusText);
-                    nKey.Close();
-                }
-            }
-        }
-
-        private void lblSupport_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            ChangeMenu();
-            SupportForm sf = new SupportForm(this);
-            GlobalClass.SetLang(sf);
-            sf.ShowDialog();
-            sf.Close();
-        }
-
-        private void lblExit_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            IsClose = true;
-            this.Close();
         }
     }
 }

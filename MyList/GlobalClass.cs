@@ -27,6 +27,9 @@ namespace MyList
 
     static class GlobalClass
     {
+        ///<summary>Today's date</summary>
+        public static DateTime CurrentDateDay = DateTime.Now.Date;
+
         public const int constNullYear = 1999;
 
         public static bool IsRunning = false;

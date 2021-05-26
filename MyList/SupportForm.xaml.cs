@@ -29,14 +29,14 @@ namespace MyList
             {
                 try
                 {
-                    MailMessage mail = new MailMessage("andrey14scr@gmail.com", "andrey14scr@gmail.com");
+                    MailMessage mail = new MailMessage("Andrey14scr@yandex.ru", "Andrey14scr@yandex.ru");
                     mail.Subject = "MyList";
                     mail.Body = tbMail.Text;
                     if(tbEmail.Text != "")
                         mail.Body += "\nFeedback: " + tbEmail.Text;
-                    SmtpClient client = new SmtpClient("smtp.gmail.com");
-                    client.Port = 587;
-                    client.Credentials = new System.Net.NetworkCredential("andrey14scr@gmail.com", "59645206gg14");
+                    SmtpClient client = new SmtpClient("smtp.yandex.ru");
+                    client.Port = 25; //587
+                    client.Credentials = new System.Net.NetworkCredential("Andrey14scr@yandex.ru", "59645206y14");
                     client.EnableSsl = true;
                     foreach (var item in Pathes)
                     {

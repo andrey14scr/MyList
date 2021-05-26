@@ -350,6 +350,7 @@ namespace MyList
 
             int vars = item.IntervalVars;
             bool[] bools = GlobalClass.IntToBitArray(vars);
+            
             wr.cbKind.SelectedIndex = (int)item.Type;
             switch (item.Type)
             {
@@ -387,6 +388,7 @@ namespace MyList
             }
 
             wr.Kind = (int)item.KindRemind;
+            wr.cbKindRemind.SelectedIndex = (int)item.KindRemind;
 
             if ((bool)wr.ShowDialog())
             {
@@ -394,7 +396,7 @@ namespace MyList
                 MWOwner.UpdateDB(item.Id, NewNote);
                 ListOfRemindNotes[lbReminds.SelectedIndex] = NewNote;
                 UpdateListBox();
-                MWOwner.SelectDataForDay(MWOwner.CurrentDateDay);
+                MWOwner.SelectDataForDay(GlobalClass.CurrentDateDay);
             }
             wr.Close();
         }

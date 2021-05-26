@@ -8,6 +8,31 @@
         mc:Ignorable="d"
         Title="myList" Height="450" Width="350" MinHeight="450" MinWidth="350" SizeChanged="Window_SizeChanged" KeyDown="Window_KeyDown" Closing="Window_Closing" Closed="Window_Closed" MouseLeftButtonUp="Window_MouseLeftButtonUp" MouseRightButtonUp="Window_MouseRightButtonUp" MouseDoubleClick="Window_MouseDoubleClick">
 
+    <Window.Resources>
+        <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Background="Transparent">
+                                <ContentPresenter></ContentPresenter>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid x:Name="FormGrid" Background="#FFDAF1FF" Margin="0,0,-0.4,-0.2">
         <tb:TaskbarIcon x:Name="myNotifyIcon" Visibility="Visible" MenuActivation="LeftOrRightClick" PopupActivation="DoubleClick" TrayMouseDoubleClick="TrayDoubleClick" ToolTipText="MyList">
             <tb:TaskbarIcon.ContextMenu>
@@ -21,11 +46,12 @@
         <Grid Margin="0,0,-0.4,0" Background="#FF78AEFD" Height="51" VerticalAlignment="Bottom">
             <Button x:Name="btnAdd" Content="{DynamicResource stringAdd}" Margin="95,7" FontSize="16" Click="btnAdd_Click" IsTabStop="False" Padding="1,0,1,1"/>
             <Button x:Name="btnExit" Content="{DynamicResource stringClose}" Margin="0,7,10.4,7" RenderTransformOrigin="0.48,0.076" Click="btnExit_Click" HorizontalAlignment="Right" Width="75" FontSize="16" Padding="1,0,1,1"/>
-            <Button x:Name="btnOpen" Content="Button" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="75" Height="37" Click="Button_Click"/>
         </Grid>
 
 
-        <Grid x:Name="grLabelGrid" Background="#FFE2E2E2" Height="22" VerticalAlignment="Top"/>
+        <Grid x:Name="grLabelGrid" Background="#FFE2E2E2" Height="22" VerticalAlignment="Top">
+            <Button x:Name="btnMenu" Style="{StaticResource TransparentStyle}" Content="Menu" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="22" Click="Menu_Click" FontSize="14" BorderBrush="{x:Null}"/>
+        </Grid>
         <Label x:Name="lblData" Content="data" Margin="127,0,0,0" Background="{x:Null}" Height="22" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="14" Padding="0,3,1,2" Width="111" HorizontalAlignment="Left" HorizontalContentAlignment="Center" MouseLeave="lblData_MouseLeave" MouseEnter="lblData_MouseEnter" MouseUp="lblData_MouseUp"/>
 
 
@@ -35,32 +61,17 @@
             </ScrollViewer>
         </Grid>
 
-        <Canvas x:Name="MainCanvas">
-            <Menu x:Name="menuMenu" Height="22" Width="56" Background="{x:Null}">
-                <MenuItem x:Name="miMenu" Height="22" Width="56" Header="{DynamicResource stringMenu}" HorizontalContentAlignment="Center" FontSize="14" Click="Menu_Click" SubmenuOpened="miMenu_SubmenuOpened" IsTabStop="False">
-                    <MenuItem x:Name="miSelectDate" Header="{DynamicResource stringGoTo}" Click="miSelectDate_Click" />
-                    <MenuItem x:Name="miToday" Header="{DynamicResource stringToday}" Click="miToday_Click"/>
-                    <MenuItem x:Name="miArchive" Header="{DynamicResource stringShowArchive}" Click="miArchive_Click"/>
-                    <MenuItem x:Name="miToArchive" Header="{DynamicResource stringToArchive}">
-                        <MenuItem x:Name="miAllCompletedToArchive" Header="{DynamicResource stringCompleted}" Click="miAllCompletedInArchive_Click" Margin="0"/>
-                    </MenuItem>
-                    <MenuItem x:Name="miSettings" Header="{DynamicResource stringSettings}" Click="miSettings_Click"/>
-                    <MenuItem x:Name="miSupport" Header="{DynamicResource stringSupport}" Click="miSupport_Click"/>
-                    <Separator/>
-                    <MenuItem x:Name="miExit" Header="{DynamicResource stringExit}" Click="miExit_Click" />
-                </MenuItem>
-            </Menu>
-        </Canvas>
+        <Canvas x:Name="MainCanvas" Margin="0,0,0.4,0.2" Panel.ZIndex="99"/>
 
-        <StackPanel x:Name="spMenu" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="0" Canvas.Top="22" Background="#FFCAF1FD" Margin="0,22,0,0">
+        <StackPanel x:Name="spMenu" HorizontalAlignment="Left" Height="419" VerticalAlignment="Top" Width="0" Canvas.Top="22" Background="#FFCAF1FD" Panel.ZIndex="100">
             <Label x:Name="lblGoto" Content="{DynamicResource stringGoTo}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblGoto_MouseUp"/>
             <Label x:Name="lblToday" Content="{DynamicResource stringToday}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblToday_MouseUp"/>
             <Label x:Name="lblArchive" Content="{DynamicResource stringShowArchive}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblArchive_MouseUp"/>
             <Label x:Name="lblToArchive" Content="{DynamicResource stringToArchive}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblToArchive_MouseUp"/>
             <Label x:Name="lblSettings" Content="{DynamicResource stringSettings}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblSettings_MouseUp"/>
             <Label x:Name="lblSupport" Content="{DynamicResource stringSupport}" Height="26" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" MouseUp="lblSupport_MouseUp"/>
-            <Label x:Name="lblVoid" Content="" Height="164"/>
-            <Label x:Name="lblExit" Content="{DynamicResource stringExit}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblExit_MouseUp"/>
+            <Label x:Name="lblVoid" Content="" Height="237"/>
+            <Label x:Name="lblExit" Content="{DynamicResource stringExit}" MouseEnter="lblMenuItem_MouseEnter" MouseLeave="lblMenuItem_MouseLeave" FontSize="14" Padding="5,2" Height="26" MouseUp="lblExit_MouseUp" Background="#FFFF8282"/>
         </StackPanel>
 
         <Menu x:Name="MenuBox" HorizontalAlignment="Left" Height="72" Margin="-148,54,0,0" VerticalAlignment="Top" Width="114">

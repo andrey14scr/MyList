@@ -16,12 +16,14 @@ using System.Threading.Tasks;
 //using Dropbox.Api;
 using System.Text;
 using System.Windows.Media.Animation;
+using System.Windows.Input;
 //using Dropbox.Api.Files;
 
 namespace MyList
 {
     public partial class MainWindow : Window
     {
+        private bool IsMenuOpen = false;
         //static string mytoken = "sl.AkvCuPOTz9wacOL_zP_3l60MS_qsqFWJ4Hu4V0IF0IRU_1S87VSYAaWcebDsHnNwIZV_zxFlApTRRdlkaLAoEdvFtZOHFVFK_LwhPv0k64BLx5Hz7voFTP9KFLWuGTS541yZvjN11QI";
         //static string JsonContent;
 
@@ -70,8 +72,6 @@ namespace MyList
         public Thread WaitingThread;
         ///<summary>Last clicked panel</summary>
         private MessagePanel CurrentPanel;
-        ///<summary>Today's date</summary>
-        public DateTime CurrentDateDay = DateTime.Now.Date;
         ///<summary>Reminder for this window</summary>
         private Reminder WinReminder;
         ///<summary>Navigational calendar in the top of main window</summary>
@@ -179,8 +179,8 @@ namespace MyList
         {
             this.Show();
             this.WindowState = WindowState.Normal;
-            CurrentDateDay = DateTime.Now.Date;
-            SelectDataForDay(CurrentDateDay);
+            GlobalClass.CurrentDateDay = DateTime.Now.Date;
+            SelectDataForDay(GlobalClass.CurrentDateDay);
         }
 
         /// <summary>Update selected bool variable from registry</summary>
@@ -257,8 +257,8 @@ namespace MyList
             Canvas.SetLeft(MainCalendar, this.ActualWidth / 2 - MainCalendar.Width / 2 - 10);
             Canvas.SetTop(MainCalendar, 28);
 
-            spMenu.Height = this.ActualHeight - 112;
-            lblVoid.Height = spMenu.Height - 182;
+            spMenu.Height = this.ActualHeight;
+            lblVoid.Height = spMenu.Height - 221;
         }
       
         /// <summary>Hide menu after right mouse click</summary>
@@ -421,7 +421,7 @@ namespace MyList
             MainGrid.Children.Clear();
             this.UpdateLayout();
             CurrentHeight = 0;
-            lblData.Content = CurrentDateDay.ToShortDateString();
+            lblData.Content = GlobalClass.CurrentDateDay.ToShortDateString();
             switch (day.DayOfWeek)
             {
                 case DayOfWeek.Sunday:
@@ -915,6 +915,10 @@ namespace MyList
                 }
             }
             CheckSizes();
+
+            if (CurrentPanel != null)
+                CurrentPanel.SetUsualColor(CurrentPanel.InnerNote);
+
             CurrentPanel = null;
             HideList();
             BeginWaiting();
@@ -940,7 +944,7 @@ namespace MyList
                     }
                 }
             }
-            SelectDataForDay(CurrentDateDay);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
 
             CurrentPanel = null;
             BeginWaiting();
@@ -966,15 +970,15 @@ namespace MyList
             }
 
             MainSW.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-            miSelectDate.IsEnabled = true;
-            miToday.IsEnabled = true;
-            miArchive.IsEnabled = true;
-            miToArchive.IsEnabled = true;
+            lblToArchive.IsEnabled = true;
+            lblArchive.IsEnabled = true;
+            lblToday.IsEnabled = true;
+            lblGoto.IsEnabled = true;
             btnAdd.IsEnabled = true;
             btnLeft.IsEnabled = true;
             btnRight.IsEnabled = true;
             MainGrid.Children.Clear();
-            SelectDataForDay(CurrentDateDay);
+            SelectDataForDay(GlobalClass.CurrentDateDay);
             IsBookMark = false;
         }
         
@@ -986,10 +990,10 @@ namespace MyList
             lblData.MouseLeave -= lblData_MouseLeave;
 
             this.ResizeMode = ResizeMode.CanMinimize;
-            miSelectDate.IsEnabled = false;
-            miToday.IsEnabled = false;
-            miArchive.IsEnabled = false;
-            miToArchive.IsEnabled = false;
+            lblToArchive.IsEnabled = false;
+            lblArchive.IsEnabled = false;
+            lblToday.IsEnabled = false;
+            lblGoto.IsEnabled = false;
             btnAdd.IsEnabled = false;
             btnLeft.IsEnabled = false;
             btnRight.IsEnabled = false;
@@ -1171,22 +1175,31 @@ namespace MyList
             }
         }
 
-        private void ChangeMenu()
+        private void ChangeMenuState()
         {
             DoubleAnimation myAnimation = new DoubleAnimation();
             myAnimation.From = spMenu.ActualWidth;
-            isopen = !isopen;
-            if (!isopen)
+            IsMenuOpen = !IsMenuOpen;
+            if (!IsMenuOpen)
             {
+                MainCanvas.Background = null;
+                MainCanvas.MouseUp -= MainCanvas_MouseUp;
                 myAnimation.To = 0;
-                myAnimation.Duration = TimeSpan.FromMilliseconds(200);
+                myAnimation.Duration = TimeSpan.FromMilliseconds(100);
             }
             else
             {
-                myAnimation.To = 100;
-                myAnimation.Duration = TimeSpan.FromMilliseconds(400);
+                MainCanvas.Background = new SolidColorBrush(Color.FromArgb(90, 0, 0, 0));
+                MainCanvas.MouseUp += MainCanvas_MouseUp;
+                myAnimation.To = 120;
+                myAnimation.Duration = TimeSpan.FromMilliseconds(250);
             }
             spMenu.BeginAnimation(StackPanel.WidthProperty, myAnimation);
+        }
+
+        private void MainCanvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ChangeMenuState();
         }
     }
 }
