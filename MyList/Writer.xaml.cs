@@ -29,7 +29,7 @@ namespace MyList
         bool allcheck = false;
         string inputplease;
         bool isend = false;
-        public bool IsEdit = false;
+        private bool IsEdit;
         
         public int wrIntervalValue = -1;
         public int wrIntervalVars = -1;
@@ -113,8 +113,9 @@ namespace MyList
                     return false;
             return true;
         }
-        public Writer(Window w)
+        public Writer(Window w, bool isEdit)
         {
+            this.IsEdit = isEdit;
             this.Owner = w;
             this.Resources = w.Resources;
             InitializeComponent();
@@ -136,7 +137,14 @@ namespace MyList
             }
 
             cbKind.SelectedIndex = (int)TypeNote.Usual;
+            
             cbKindRemind.SelectedIndex = (int)KindRemind.Usual;
+            if (!IsEdit)
+            {
+                cbKindRemind.SelectedIndex = (int)KindRemind.Repeatable;
+            }
+
+            tbText.Focus();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -568,6 +576,8 @@ namespace MyList
                 cb2.Items.Add((string)this.FindResource("stringHours"));
                 cb2.Items.Add((string)this.FindResource("stringOfDays"));
                 cb2.SelectedIndex = ve;
+                if(!IsEdit)
+                    cb2.SelectedIndex = 1;
 
                 Canvas.SetTop(lbl1, 6);
                 Canvas.SetLeft(lbl1, 10);

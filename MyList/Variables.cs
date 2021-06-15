@@ -829,13 +829,13 @@ namespace MyList
         }
         
         /// <summary>Open a <seealso cref="Writer"/> to change some information about it</summary>
-        private void CallWriter()
+        private void CallWriter(bool isEdit)
         {
             foreach (var item in MainGrid.Children)
             {
                 if ((item as MessagePanel) == CurrentPanel)
                 {
-                    Writer wr = new Writer(this) { IsEdit = true };
+                    Writer wr = new Writer(this, isEdit);
                     wr.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
                     wr.tbText.Text = (item as MessagePanel).InnerNote.Message;

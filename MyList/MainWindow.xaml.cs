@@ -140,7 +140,7 @@ namespace MyList
             MainCalendar.Visibility = Visibility.Hidden;
             HideList();
             CurrentPanel = null;
-            Writer wr = new Writer(this);
+            Writer wr = new Writer(this, false);
             if (IsFocusText)
                 wr.tbText.Focus();
             wr.dpDate.SelectedDate = GlobalClass.CurrentDateDay;
@@ -198,7 +198,7 @@ namespace MyList
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             HideList();
-            CallWriter();
+            CallWriter(true);
         }
         private void Delete_Click(object sender, EventArgs e)
         {
@@ -401,7 +401,7 @@ namespace MyList
                 if ((item as MessagePanel).IsMouseOver)
                     CurrentPanel = (item as MessagePanel);
             }
-            CallWriter();
+            CallWriter(true);
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {

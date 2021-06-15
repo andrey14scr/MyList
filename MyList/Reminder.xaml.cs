@@ -332,7 +332,7 @@ namespace MyList
         {
             Note item = ListOfRemindNotes[lbReminds.SelectedIndex];
 
-            Writer wr = new Writer(this) { IsEdit = true };
+            Writer wr = new Writer(this, true);
             wr.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             wr.tbText.Text = item.Message;
